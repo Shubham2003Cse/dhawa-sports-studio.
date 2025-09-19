@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dhawa Sports Studio</title>
+
+  <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgmISiUEL-MiO19qJDdxC7H8WTEMASm6qoa6CS-7Qv1mFLabla73cpXzR-znnDhdCPd3e4EoOs_ZmYYYh4LFfzLfDp_f5lUutba0kuLIRqCWkiBE2mQD-kJueKQ2h-3IAQ1G5kOpafZf34kTcGCskYYonAdHaAGXdC2-6lmM8CKjFY9-d-Q8HEUhy9q/s1070/WhatsApp%20Image%202025-09-14%20at%2022.04.04_b0c5e921.jpg">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    /* =============================
+       Global Styles & Variables
+       ============================= */
+    :root {
+      --primary-color: #1db954;
+      --secondary-color: #0a0a0a;
+      --accent-color: #ff5722;
+      --text-color: #f1f1f1;
+      --dark-bg: #0f0f0f;
+      --card-bg: #151515;
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      color: var(--text-color);
+      scroll-behavior: smooth;
+      background: linear-gradient(135deg, #0a0a0a, #1c1c1c, #000000);
+      background-attachment: fixed;
+      background-size: 200% 200%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    /* =============================
+       Background Animations
+       ============================= */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 20%, rgba(29,185,84,0.15), transparent 60%),
+                  radial-gradient(circle at 80% 80%, rgba(255,87,34,0.15), transparent 60%);
+      z-index: -1;
+      animation: bgmove 20s ease-in-out infinite;
+    }
+
+    @keyframes bgmove {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(15px, 20px); }
+      50% { transform: translate(-10px, -15px); }
+      75% { transform: translate(20px, -10px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* =============================
+       Header & Navigation
+       ============================= */
+    .header {
+      position: fixed;
+      top: 0;  
+      left: 0;  
+      right: 0;
+      height: 70px;
+      background: rgba(10, 10, 10, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo {
+      height: 40px;
+      width: 40px;
+      border-radius: 8px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.1);
+    }
+    
+    .site-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-color);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      animation: glow 2.5s ease-in-out infinite alternate;
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #1db954, 0 0 10px #1db954, 0 0 15px #1db954; }
+      to { text-shadow: 0 0 10px #1db954, 0 0 20px #1db954, 0 0 30px #1db954, 0 0 40px #1db954; }
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .nav-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      color: #b0b0b0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-icon:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--primary-color);
+    }
+
+    /* ✅ New: Tooltip for icons */
+    .nav-icon .tooltip {
+      position: absolute;
+      top: 55px;
+      background-color: var(--primary-color);
+      color: var(--secondary-color);
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+    .nav-icon:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    /* ✅ New: Hamburger Menu Icon */
+    .hamburger-menu {
+      display: none;
+      cursor: pointer;
+    }
+
+    /* =============================
+       Main Content & Video
+       ============================= */
+    .main-content {
+      padding-top: 70px;
+      /* ✅ New: Fade-in animation for content */
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .video-container {
+      width: 100%;
+      max-width: 1200px;
+      aspect-ratio: 16/9;
+      background: #000;
+      margin: 20px auto 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    /* ✅ New: Loading placeholder for iframe */
+    .video-loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+      color: var(--primary-color);
+      font-family: 'Orbitron', sans-serif;
+      z-index: 1;
+    }
+    
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* =============================
+       Footer
+       ============================= */
+    .footer {
+      background: rgba(15,15,15,0.95);
+      padding: 30px 20px;
+      text-align: center;
+      margin-top: 40px;
+      border-top: 1px solid var(--border-color);
+      backdrop-filter: blur(8px);
+    }
+    
+    .footer-text {
+      color: #aaa;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    .footer a {
+      color: var(--primary-color);
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .footer a:hover {
+      color: var(--accent-color);
+    }
+
+    /* ✅ New: Social Media Icons Section */
+    .social-icons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .social-icons a {
+      font-size: 24px;
+      color: #aaa;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .social-icons a:hover {
+      transform: scale(1.2);
+      color: var(--primary-color);
+    }
+
+
+    /* =============================
+       Responsiveness (Mobile)
+       ============================= */
+    @media (max-width: 768px) {
+      .header {
+        padding: 0 15px;
+      }
+      .site-title {
+        font-size: 16px;
+      }
+      .nav-menu {
+        position: fixed;
+        top: 70px;
+        right: -100%; /* Start off-screen */
+        width: 250px;
+        height: calc(100vh - 70px);
+        background: rgba(10, 10, 10, 0.98);
+        flex-direction: column;
+        align-items: center;
+        padding-top: 30px;
+        gap: 20px;
+        transition: right 0.4s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+      }
+      .nav-menu.active {
+        right: 0; /* Slide in */
+      }
+      .nav-icon {
+        width: 80%;
+        justify-content: flex-start;
+        padding-left: 20px;
+        border-radius: 8px;
+      }
+      .nav-icon .material-icons {
+        margin-right: 15px;
+      }
+      .nav-icon .tooltip {
+         display: none; /* Hide tooltips on mobile */
+      }
+      .nav-icon span:not(.material-icons) {
+        display: inline; /* Show text label */
+      }
+      .hamburger-menu {
+        display: block;
+      }
+      .video-container {
+        margin: 15px;
+        width: auto;
+      }
+      .footer {
+        padding: 25px 15px;
+      }
+    }
+
+    /* =============================
+       CSS Functions Explained
+       ============================= */
+    /*
+     1. linear-gradient() → Creates a gradient along a straight line.
+        Example: background: linear-gradient(to right, red, blue);
+
+     2. radial-gradient() → Creates a gradient radiating from a center point.
+        Example: background: radial-gradient(circle, yellow, green);
+
+     3. rgba() → Defines colors with transparency (alpha channel).
+        Example: background: rgba(255, 0, 0, 0.5);  // semi-transparent red
+
+     4. transform: translate() → Moves an element from its current position.
+        Example: transform: translate(15px, 20px); // moves 15px right, 20px down
+
+     5. transform: scale() → Resizes an element (zoom in/out).
+        Example: transform: scale(1.2);  // 120% larger
+    */
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-container">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgmISiUEL-MiO19qJDdxC7H8WTEMASm6qoa6CS-7Qv1mFLabla73cpXzR-znnDhdCPd3e4EoOs_ZmYYYh4LFfzLfDp_f5lUutba0kuLIRqCWkiBE2mQD-kJueKQ2h-3IAQ1G5kOpafZf34kTcGCskYYonAdHaAGXdC2-6lmM8CKjFY9-d-Q8HEUhy9q/s1070/WhatsApp%20Image%202025-09-14%20at%2022.04.04_b0c5e921.jpg" alt="Dhawa Sports Studio Logo" class="logo">
+      <div class="site-title">Dhawa Sports Studio</div>
+    </div>
+    <nav class="nav-menu" id="nav-menu">
+      <a href="#" class="nav-icon">
+        <span class="material-icons">home</span>
+        <span class="tooltip">Home</span>
+        <span style="display: none;">Home</span>
+      </a>
+      <a href="#" class="nav-icon">
+        <span class="material-icons">search</span>
+        <span class="tooltip">Search</span>
+        <span style="display: none;">Search</span>
+      </a>
+      <a href="#" class="nav-icon">
+        <span class="material-icons">account_circle</span>
+        <span class="tooltip">Profile</span>
+        <span style="display: none;">Profile</span>
+      </a>
+    </nav>
+    <div class="hamburger-menu" id="hamburger-menu">
+      <span class="material-icons" style="font-size: 28px;">menu</span>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="video-container">
+      <div class="video-loader">Loading Stream...</div>
+      <iframe 
+        src="https://cricketstan.github.io/Channel-13/?autoplay=1"
+        allow="autoplay; encrypted-media; microphone; speaker"
+        allowfullscreen
+        onload="this.previousElementSibling.style.display='none';"
+        ></iframe>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="social-icons">
+      <a href="#" target="_blank"><img src="https://img.icons8.com/ios-filled/50/aaaaaa/twitterx.png" alt="Twitter/X" width="24"/></a>
+      <a href="#" target="_blank"><img src="https://img.icons8.com/ios-filled/50/aaaaaa/instagram-new.png" alt="Instagram" width="24"/></a>
+      <a href="#" target="_blank"><img src="https://img.icons8.com/ios-filled/50/aaaaaa/youtube-play.png" alt="YouTube" width="24"/></a>
+    </div>
+    <p class="footer-text">© 2025 Dhawa Sports Studio. All rights reserved.</p>
+    <p class="footer-text">Please visit my website 👉 <a href="https://www.pdfsupertool.com" target="_blank">www.pdfsupertool.com</a></p>
+  </div>
+
+  <script>
+    const hamburger = document.getElementById('hamburger-menu');
+    const navMenu = document.getElementById('nav-menu');
+
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Optional: Close the menu when a link is clicked
+    document.querySelectorAll('.nav-icon').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
